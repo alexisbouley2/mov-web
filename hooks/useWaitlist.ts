@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface WaitlistError {
   message: string;
@@ -8,6 +8,7 @@ interface WaitlistError {
 
 export const useWaitlist = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<WaitlistError | null>(null);
 
@@ -20,13 +21,19 @@ export const useWaitlist = () => {
       setIsLoading(true);
       setError(null);
 
+      // Get referral code from URL parameters
+      const referralCode = searchParams.get("ref");
+
       try {
         const response = await fetch("/api/waitlist", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({
+            email,
+            referralCode: referralCode || undefined,
+          }),
         });
 
         const data = await response.json();
@@ -73,7 +80,7 @@ export const useWaitlist = () => {
         setIsLoading(false);
       }
     },
-    [router]
+    [router, searchParams]
   );
 
   return {

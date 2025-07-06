@@ -3,7 +3,7 @@ import { supabase } from "@/lib/supabase";
 
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json();
+    const { email, referralCode } = await request.json();
 
     // Validate email
     if (!email || !email.includes("@")) {
@@ -27,8 +27,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Try to find referrer if referral code is provided (but don't fail if invalid)
+    let referrerId: string | null = null;
+    if (referralCode) {
+      const { data: referrer } = await supabase
+        .from("waitlist")
+        .select("id")
+        .eq("referral_code", referralCode.toUpperCase())
+        .single();
+
+      if (referrer) {
+        referrerId = referrer.id;
+      }
+      // If referral code is invalid, we just ignore it and continue
+    }
+
     // Generate referral code
-    const referralCode = generateReferralCode();
+    const newReferralCode = await generateReferralCode();
 
     // Get current count for rank
     const { count } = await supabase
@@ -43,8 +58,9 @@ export async function POST(request: NextRequest) {
       .insert([
         {
           email: email.toLowerCase(),
-          referral_code: referralCode,
+          referral_code: newReferralCode,
           rank: rank,
+          referred_by: referrerId,
         },
       ])
       .select()
@@ -63,6 +79,7 @@ export async function POST(request: NextRequest) {
       email: data.email,
       rank: data.rank,
       referralCode: data.referral_code,
+      referredBy: data.referred_by,
     });
   } catch (error) {
     console.error("Waitlist registration error:", error);

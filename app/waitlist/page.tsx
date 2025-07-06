@@ -2,13 +2,56 @@
 
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { CheckCircle, Share2, Users } from "lucide-react";
+import {
+  CheckCircle,
+  Share2,
+  Users,
+  Check,
+  Copy,
+  ExternalLink,
+} from "lucide-react";
+import { useState } from "react";
 
 export default function WaitlistPage() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const rank = searchParams.get("rank");
   const referralCode = searchParams.get("referralCode");
+  const [isCopied, setIsCopied] = useState(false);
+  const referralLink = `${window.location.origin}?ref=${referralCode}`;
+
+  const copyReferralLink = async () => {
+    if (referralCode) {
+      try {
+        await navigator.clipboard.writeText(referralLink);
+        setIsCopied(true);
+      } catch (error) {
+        console.error("Failed to copy link:", error);
+        alert("Failed to copy link. Please try again.");
+      }
+    }
+  };
+
+  const shareReferralLink = async () => {
+    if (referralCode) {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: "Join the MOV waitlist!",
+            text: "I just joined the MOV waitlist and got early access. Join me!",
+            url: referralLink,
+          });
+        } catch (error) {
+          console.error("Error sharing:", error);
+          // Fallback to copying
+          await copyReferralLink();
+        }
+      } else {
+        // Fallback to copying the full link
+        await copyReferralLink();
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4">
@@ -48,20 +91,48 @@ export default function WaitlistPage() {
           </div>
         )}
 
-        {/* Referral Code */}
+        {/* Referral Code Section */}
         {referralCode && (
-          <div className="bg-gray-900 rounded-lg p-4 space-y-3">
-            <p className="text-gray-400 text-sm">Share your referral code:</p>
-            <div className="flex items-center justify-between bg-gray-800 rounded px-3 py-2">
-              <code className="text-white font-mono text-sm">
-                {referralCode}
-              </code>
+          <div className="bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-500/30 rounded-lg p-6 space-y-4">
+            <div className="space-y-2">
+              <h3 className="text-white font-semibold text-lg">Share & Earn</h3>
+              <p className="text-gray-300 text-sm">
+                Share your referral link and help others join the waitlist!
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-gray-400 text-sm">Your referral link:</p>
+              <div className="flex items-center justify-between bg-gray-800 rounded-lg px-4 py-3">
+                <code className="text-white font-mono text-lg font-bold">
+                  {referralLink}
+                </code>
+                <button
+                  onClick={copyReferralLink}
+                  className="text-blue-500 hover:text-blue-400 transition-colors p-1"
+                  title="Copy referral link"
+                >
+                  {isCopied ? (
+                    <Check className="w-5 h-5" />
+                  ) : (
+                    <Copy className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
+
               <button
-                onClick={() => navigator.clipboard.writeText(referralCode)}
-                className="text-blue-500 hover:text-blue-400 transition-colors"
+                onClick={shareReferralLink}
+                className="w-full flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors"
               >
                 <Share2 className="w-4 h-4" />
+                <span>Share Referral Link</span>
               </button>
+
+              <p className="text-gray-400 text-xs">
+                {isCopied
+                  ? "Link copied to clipboard!"
+                  : "Share your unique link with friends"}
+              </p>
             </div>
           </div>
         )}
