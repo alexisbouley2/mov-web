@@ -11,26 +11,20 @@ A clean and modern landing page built with Next.js and Tailwind CSS.
 
 ### Installation
 
-1. Navigate to the project directory:
-
-```bash
-cd landing-2
-```
-
-2. Install dependencies:
+1. Install dependencies:
 
 ```bash
 npm install
-# or
-yarn install
 ```
+
+2. Set up environment variables:
+
+Create a `.env.local` file in the root directory and add your environment variables.
 
 3. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

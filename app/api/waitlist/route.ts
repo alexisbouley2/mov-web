@@ -30,16 +30,20 @@ export async function POST(request: NextRequest) {
     // Try to find referrer if referral code is provided (but don't fail if invalid)
     let referrerId: string | null = null;
     if (referralCode) {
-      const { data: referrer } = await supabase
-        .from("waitlist")
-        .select("id")
-        .eq("referral_code", referralCode.toUpperCase())
-        .single();
+      try {
+        const { data: referrer } = await supabase
+          .from("waitlist")
+          .select("id")
+          .eq("referral_code", referralCode.toUpperCase())
+          .single();
 
-      if (referrer) {
-        referrerId = referrer.id;
+        if (referrer) {
+          referrerId = referrer.id;
+        }
+        // If referral code is invalid, we just ignore it and continue
+      } catch (error) {
+        console.error("Error finding referrer:", error);
       }
-      // If referral code is invalid, we just ignore it and continue
     }
 
     // Generate referral code
