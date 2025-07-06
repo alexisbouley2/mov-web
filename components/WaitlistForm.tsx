@@ -1,53 +1,67 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 
 interface WaitlistFormProps {
-  onSubmit: (email: string) => void;
+  onSubmit: (email: string) => Promise<void>;
+  isLoading?: boolean;
 }
 
-export default function WaitlistForm({ onSubmit }: WaitlistFormProps) {
+export default function WaitlistForm({
+  onSubmit,
+  isLoading = false,
+}: WaitlistFormProps) {
   const [email, setEmail] = useState("");
   const [isValid, setIsValid] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const validateEmail = (email: string) => {
+  const validateEmail = useCallback((email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
-  };
+  }, []);
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setEmail(value);
-    if (value === "") {
-      setIsValid(true);
-    } else {
-      setIsValid(validateEmail(value));
-    }
-  };
+  const handleEmailChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setEmail(value);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateEmail(email)) {
-      setIsValid(false);
-      return;
-    }
-    setIsSubmitting(true);
-    try {
-      await onSubmit(email);
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+      if (value === "") {
+        setIsValid(true);
+      } else {
+        setIsValid(validateEmail(value));
+      }
+    },
+    [validateEmail]
+  );
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      handleSubmit(e);
-    }
-  };
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+
+      if (!validateEmail(email)) {
+        setIsValid(false);
+        return;
+      }
+
+      try {
+        await onSubmit(email);
+        // Clear form on successful submission
+        setEmail("");
+      } catch (error) {
+        console.error("Error submitting form:", error);
+      }
+    },
+    [email, validateEmail, onSubmit]
+  );
+
+  const handleKeyPress = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Enter") {
+        handleSubmit(e);
+      }
+    },
+    [handleSubmit]
+  );
 
   return (
     <motion.div
@@ -63,27 +77,39 @@ export default function WaitlistForm({ onSubmit }: WaitlistFormProps) {
             value={email}
             onChange={handleEmailChange}
             onKeyPress={handleKeyPress}
-            placeholder="Email"
+            placeholder="Enter your email"
+            aria-label="Email address"
             className={`flex-1 h-9 sm:h-10 text-xs sm:text-sm bg-[#111] border border-[#333] rounded-l-lg sm:rounded-l-xl rounded-r-none px-3 sm:px-4 text-white placeholder-gray-400 focus:outline-none focus:border-white transition-all duration-200 font-light font-inter ${
               !isValid ? "border-red-400" : ""
             }`}
-            disabled={isSubmitting}
+            disabled={isLoading}
             autoComplete="email"
+            required
           />
           <button
             type="submit"
-            disabled={!isValid || isSubmitting || !email}
+            disabled={!isValid || isLoading || !email}
+            aria-label="Join waitlist"
             className="h-9 sm:h-10 px-4 sm:px-5 bg-white text-black font-light text-xs sm:text-sm rounded-r-lg sm:rounded-r-xl rounded-l-none shadow-md transition-all duration-200 hover:bg-gray-100 disabled:opacity-60 disabled:cursor-not-allowed font-inter"
           >
-            {isSubmitting ? <span className="animate-pulse">...</span> : "Join"}
+            {isLoading ? (
+              <span className="animate-pulse" aria-label="Loading...">
+                ...
+              </span>
+            ) : (
+              "Join"
+            )}
           </button>
         </div>
-        <div className="h-6 mt-2 ml-2 ">
+
+        {/* Validation Error */}
+        <div className="h-6 mt-2 ml-2">
           {!isValid && email && (
             <motion.p
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-red-400 text-xs sm:text-sm"
+              role="alert"
             >
               Please enter a valid email address
             </motion.p>

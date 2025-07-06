@@ -1,41 +1,36 @@
 "use client";
 
+import { useEffect } from "react";
 import Header from "@/components/Header";
 import VideoPlayer from "@/components/VideoPlayer";
 import Footer from "@/components/Footer";
 import WaitlistForm from "@/components/WaitlistForm";
+import ErrorDisplay from "@/components/ErrorDisplay";
+import { useWaitlist } from "@/hooks/useWaitlist";
 
 export default function Home() {
-  const handleEmailSubmit = async (email: string) => {
-    try {
-      const response = await fetch("/api/waitlist", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
+  const { submitEmail, isLoading, error, clearError } = useWaitlist();
 
-      if (response.ok) {
-        const data = await response.json();
-        // setUserRank(data.rank);
-        // setReferralCode(data.referralCode);
-        // setIsSubmitted(true);
-      } else {
-        const error = await response.json();
-        alert(error.message || "Something went wrong. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error submitting email:", error);
-      alert("Something went wrong. Please try again.");
+  // Auto-clear error after 5 seconds
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        clearError();
+      }, 5000);
+
+      return () => clearTimeout(timer);
     }
-  };
+  }, [error, clearError]);
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-between">
       <Header />
       <VideoPlayer />
-      <WaitlistForm onSubmit={handleEmailSubmit} />
+
+      {/* Error Display */}
+      {error && <ErrorDisplay error={error} />}
+
+      <WaitlistForm onSubmit={submitEmail} isLoading={isLoading} />
       <Footer />
     </div>
   );
