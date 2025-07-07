@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import config from "@/lib/config";
 import { ValidateInviteResponse } from "@movapp/types";
 
-const BACKEND_URL = config().NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL!;
 
 export async function POST(request: NextRequest) {
   try {
