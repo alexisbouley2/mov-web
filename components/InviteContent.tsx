@@ -33,10 +33,16 @@ export default function InviteContent({ token }: { token: string }) {
       window.location.href = deepLinkUrl;
     };
 
+    console.log("redirecting to app");
+    console.log("url", config().NEXT_PUBLIC_APP_STORE_URL);
+    console.log("url", config().NEXT_PUBLIC_PLAY_STORE_URL);
+
     const redirectToStore = () => {
       if (deviceType === "ios") {
+        console.log("redirecting to app store");
         window.location.href = config().NEXT_PUBLIC_APP_STORE_URL;
       } else {
+        console.log("redirecting to play store");
         window.location.href = config().NEXT_PUBLIC_PLAY_STORE_URL;
       }
     };
