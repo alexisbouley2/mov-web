@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import config from "@/lib/config";
@@ -9,7 +8,6 @@ import config from "@/lib/config";
 type DeviceType = "ios" | "android" | "desktop";
 
 export default function InviteContent({ token }: { token: string }) {
-  const router = useRouter();
   const [deviceType, setDeviceType] = useState<DeviceType>("desktop");
 
   useEffect(() => {
