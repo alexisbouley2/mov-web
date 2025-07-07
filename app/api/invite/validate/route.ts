@@ -24,18 +24,15 @@ export async function POST(request: NextRequest) {
     const data: ValidateInviteResponse = await response.json();
 
     if (!data.valid) {
-      return NextResponse.json(
-        { error: data.error || "Failed to validate invite" },
-        { status: 400 }
-      );
+      return NextResponse.json({
+        valid: false,
+        error: data.error || "Failed to validate invite",
+      });
     }
 
     return NextResponse.json(data);
   } catch (error) {
     console.error("Error validating invite:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Internal server error", valid: false });
   }
 }
