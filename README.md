@@ -27,4 +27,4 @@ Create a `.env.local` file in the root directory and add your environment variab
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.

@@ -2,14 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import {
-  CheckCircle,
-  Share2,
-  Users,
-  Check,
-  Copy,
-  ExternalLink,
-} from "lucide-react";
+import { CheckCircle, Share2, Users, Check, Copy } from "lucide-react";
 import { useState } from "react";
 
 export default function WaitlistContent() {

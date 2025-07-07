@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import config from "../lib/config";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL!),
+  metadataBase: new URL(config().NEXT_PUBLIC_BASE_URL),
   title: "MOV - Create Amazing Aftermovies with AI",
   description:
     "Invite friends to take short videos during events and parties. Our AI creates an edited aftermovie showing the POV of different attendees.",
