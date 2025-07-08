@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@movapp/types": "^1.0.30",
+    "@movapp/types": "^1.0.32",
     "@supabase/supabase-js": "^2.50.3",
     "framer-motion": "^12.23.0",
     "lucide-react": "^0.525.0",
