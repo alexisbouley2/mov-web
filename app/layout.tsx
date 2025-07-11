@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL!),
   title: "MOV - Create Amazing Aftermovies with AI",
   description:
-    "Invite friends to take short videos during events and parties. Our AI creates an edited aftermovie showing the POV of different attendees.",
+    "Invite friends to take short videos during events and parties. Our AI creates an edited aftermovie showing the MOV of different attendees.",
   keywords: "MOV, aftermovie, AI, social app, video editing, events, parties",
   authors: [{ name: "MOV Team" }],
   icons: {
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "MOV - Create Amazing Aftermovies with AI",
     description:
-      "Invite friends to take short videos during events and parties. Our AI creates an edited aftermovie showing the POV of different attendees.",
+      "Invite friends to take short videos during events and parties. Our AI creates an edited aftermovie showing the MOV of different attendees.",
     type: "website",
     locale: "en_US",
     images: [
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MOV - Create Amazing Aftermovies with AI",
     description:
-      "Invite friends to take short videos during events and parties. Our AI creates an edited aftermovie showing the POV of different attendees.",
+      "Invite friends to take short videos during events and parties. Our AI creates an edited aftermovie showing the MOV of different attendees.",
     images: ["/icon-512.png"],
   },
 };
