@@ -7,10 +7,6 @@ import InviteContent from "@/components/InviteContent";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { ValidateInviteResponse } from "@movapp/types";
 
-interface InviteData {
-  // No data needed, just validation status
-}
-
 export default function InvitePage() {
   const params = useParams();
   const router = useRouter();
@@ -37,6 +33,8 @@ export default function InvitePage() {
         });
 
         const data: ValidateInviteResponse = await response.json();
+
+        console.log("data", data);
 
         if (!data.valid) {
           setError(data.error || "Invalid invite");
