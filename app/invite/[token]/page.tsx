@@ -34,8 +34,6 @@ export default function InvitePage() {
 
         const data: ValidateInviteResponse = await response.json();
 
-        console.log("data", data);
-
         if (!data.valid) {
           setError(data.error || "Invalid invite");
           setLoading(false);
