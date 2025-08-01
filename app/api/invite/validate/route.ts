@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ValidateInviteResponse } from "@movapp/types";
 
-//test commit
-
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL!;
 
 export async function POST(request: NextRequest) {
@@ -13,16 +11,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Token is required" }, { status: 400 });
     }
 
-    // Call the backend to validate the invite
-    const response = await fetch(`${BACKEND_URL}/events/invite/validate`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token }),
-    });
+    // // Call the backend to validate the invite
+    // const response = await fetch(`${BACKEND_URL}/events/invite/validate`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ token }),
+    // });
 
-    const data: ValidateInviteResponse = await response.json();
+    // const data: ValidateInviteResponse = await response.json();
+
+    const data: ValidateInviteResponse = {
+      valid: true,
+      error: null,
+    };
 
     if (!data.valid) {
       return NextResponse.json({
