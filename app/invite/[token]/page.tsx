@@ -7,8 +7,6 @@ import InviteContent from "@/components/InviteContent";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { ValidateInviteResponse } from "@movapp/types";
 
-//test commit
-
 export default function InvitePage() {
   const params = useParams();
   const router = useRouter();
