@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-type DeviceType = "ios" | "android" | "desktop";
+type DeviceType = "ios" | "android" | "desktop" | "unknown";
 
 export default function InviteContent({ token }: { token: string }) {
-  const [deviceType, setDeviceType] = useState<DeviceType>("desktop");
+  const [deviceType, setDeviceType] = useState<DeviceType>("unknown");
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
@@ -21,6 +21,15 @@ export default function InviteContent({ token }: { token: string }) {
       setDeviceType("desktop");
     }
   }, []);
+
+  // Show empty page while device type is unknown
+  if (deviceType === "unknown") {
+    return (
+      <div className="min-h-screen bg-black flex flex-col">
+        <div className="flex-1"></div>
+      </div>
+    );
+  }
 
   const handleOpenApp = () => {
     try {
