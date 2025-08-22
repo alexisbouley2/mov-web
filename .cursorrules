@@ -1,0 +1,226 @@
+# MOV Landing Page - Cursor Rules
+
+## Project Overview
+This is a Next.js 14 landing page for MOV, an AI-powered aftermovie creation app. The project uses TypeScript, Tailwind CSS, Framer Motion, and Supabase for the waitlist system.
+
+## Tech Stack
+- **Framework**: Next.js 14 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Database**: Supabase
+- **Icons**: Lucide React
+- **Validation**: Zod
+- **Font**: Inter (Google Fonts)
+
+## Project Structure
+```
+MOV Landing/
+├── app/                    # Next.js App Router pages
+│   ├── api/               # API routes
+│   ├── globals.css        # Global styles
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Home page
+├── components/            # Reusable React components
+├── hooks/                # Custom React hooks
+├── lib/                  # Utility libraries (Supabase)
+└── public/               # Static assets
+```
+
+## Coding Standards
+
+### TypeScript
+- Use strict TypeScript with proper type definitions
+- Prefer interfaces over types for object shapes
+- Use proper typing for API responses and component props
+- Export types from `@movapp/types` package when available
+
+### React Components
+- Use functional components with hooks
+- Implement proper prop interfaces
+- Use "use client" directive for client-side components
+- Prefer composition over inheritance
+- Use proper error boundaries and loading states
+
+### Styling (Tailwind CSS)
+- Use Tailwind utility classes exclusively
+- Follow mobile-first responsive design
+- Use consistent spacing (4, 6, 8, 12, 16, 24, 32, 48, 64)
+- Maintain dark theme with black background (#000000)
+- Use glass effects for overlays: `glass-effect` class
+- Prefer semantic color names over hex values
+
+### File Naming
+- Use PascalCase for components: `Header.tsx`, `VideoPlayer.tsx`
+- Use camelCase for hooks: `useWaitlist.ts`
+- Use kebab-case for pages: `page.tsx`
+- Use descriptive names that reflect functionality
+
+### Component Structure
+```typescript
+// Component template
+"use client"; // If client-side
+
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+
+interface ComponentProps {
+  // Define props
+}
+
+export default function ComponentName({ prop }: ComponentProps) {
+  // Component logic
+  return (
+    // JSX
+  );
+}
+```
+
+## Key Features & Patterns
+
+### Video Player
+- Auto-playing background videos with mute toggle
+- Seamless transition between landing and waitlist videos
+- Responsive design with proper aspect ratios
+- Glass effect controls overlay
+
+### Waitlist System
+- Email validation with real-time feedback
+- Referral code generation and tracking
+- Supabase integration for data persistence
+- Rank-based positioning system
+- Share functionality with deep linking
+
+### Navigation
+- Consistent header with back button support
+- Footer with social media links
+- Mobile-responsive design
+- Proper accessibility attributes
+
+### Error Handling
+- User-friendly error messages
+- Auto-dismissing notifications
+- Proper error boundaries
+- Network error handling
+
+## API Patterns
+
+### Supabase Integration
+```typescript
+// Database operations
+const { data, error } = await supabase
+  .from("table_name")
+  .select("*")
+  .eq("column", value);
+```
+
+### API Routes
+- Use Next.js API routes in `app/api/`
+- Proper error handling and status codes
+- Type-safe request/response handling
+- Environment variable usage for external services
+
+## Environment Variables
+Required environment variables:
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `NEXT_PUBLIC_BASE_URL`
+- `NEXT_PUBLIC_BACKEND_URL`
+- `NEXT_PUBLIC_APP_STORE_URL`
+- `NEXT_PUBLIC_PLAY_STORE_URL`
+
+## Animation Guidelines
+- Use Framer Motion for smooth animations
+- Implement staggered animations for lists
+- Use proper easing functions
+- Keep animations subtle and purposeful
+- Ensure animations don't interfere with functionality
+
+## Accessibility
+- Use proper ARIA labels
+- Implement keyboard navigation
+- Provide alt text for images
+- Use semantic HTML elements
+- Ensure proper color contrast
+- Support screen readers
+
+## Performance
+- Optimize images and videos
+- Use proper loading states
+- Implement lazy loading where appropriate
+- Minimize bundle size
+- Use proper caching strategies
+
+## Testing Considerations
+- Test on multiple devices and screen sizes
+- Verify email validation logic
+- Test referral system functionality
+- Ensure proper error handling
+- Test video player controls
+- Verify social media links
+
+## Deployment
+- Configure proper environment variables
+- Set up Supabase database
+- Configure custom domain if needed
+- Set up proper redirects
+- Optimize for Core Web Vitals
+
+## Common Patterns
+
+### Form Handling
+```typescript
+const handleSubmit = useCallback(async (e: React.FormEvent) => {
+  e.preventDefault();
+  // Validation and submission logic
+}, [dependencies]);
+```
+
+### State Management
+```typescript
+const [state, setState] = useState<StateType>(initialValue);
+const clearState = useCallback(() => setState(initialValue), []);
+```
+
+### API Calls
+```typescript
+try {
+  const response = await fetch("/api/endpoint", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  const result = await response.json();
+} catch (error) {
+  // Error handling
+}
+```
+
+## Code Quality
+- Write self-documenting code
+- Use meaningful variable and function names
+- Add comments for complex logic
+- Follow DRY principles
+- Maintain consistent formatting
+- Use proper TypeScript strict mode
+
+## Security
+- Validate all user inputs
+- Sanitize data before database operations
+- Use environment variables for sensitive data
+- Implement proper CORS policies
+- Follow OWASP guidelines
+
+## Mobile-First Design
+- Design for mobile devices first
+- Use responsive breakpoints: sm, md, lg, xl
+- Test touch interactions
+- Ensure proper tap targets
+- Optimize for mobile performance
+
+## Brand Guidelines
+- Use MOV brand colors and typography
+- Maintain consistent visual hierarchy
+- Follow brand voice in copy
+- Use appropriate imagery and icons
+- Ensure brand consistency across all pages 
