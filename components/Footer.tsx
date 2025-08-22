@@ -52,6 +52,22 @@ export default function Footer() {
           </svg>
         </a>
       </div>
+
+      {/* Legal Links */}
+      <div className="flex justify-center items-center gap-6 sm:gap-8 mt-4">
+        <a
+          href="/privacy"
+          className="text-xs sm:text-sm text-gray-400 hover:text-white transition-colors duration-300"
+        >
+          Privacy Policy
+        </a>
+        <a
+          href="/terms"
+          className="text-xs sm:text-sm text-gray-400 hover:text-white transition-colors duration-300"
+        >
+          Terms of Use
+        </a>
+      </div>
     </div>
   );
 }

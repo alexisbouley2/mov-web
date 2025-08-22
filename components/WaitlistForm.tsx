@@ -115,6 +115,31 @@ export default function WaitlistForm({
             </motion.p>
           )}
         </div>
+
+        {/* Legal Links */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-4 text-center"
+        >
+          <p className="text-xs text-gray-400 mb-2">
+            By joining the waitlist, you agree to our{" "}
+            <a
+              href="/privacy"
+              className="text-blue-400 hover:text-blue-300 transition-colors underline"
+            >
+              Privacy Policy
+            </a>{" "}
+            and{" "}
+            <a
+              href="/terms"
+              className="text-blue-400 hover:text-blue-300 transition-colors underline"
+            >
+              Terms of Use
+            </a>
+          </p>
+        </motion.div>
       </form>
     </motion.div>
   );

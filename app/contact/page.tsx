@@ -69,10 +69,10 @@ export default function ContactPage() {
                       For general inquiries and support
                     </p>
                     <a
-                      href="mailto:hello@movapp.com"
+                      href="mailto:hellomovapp@gmail.com"
                       className="text-sm sm:text-base text-blue-400 hover:text-blue-300 transition-colors duration-300"
                     >
-                      hello@movapp.com
+                      hellomovapp@gmail.com
                     </a>
                   </div>
                 </motion.div>
