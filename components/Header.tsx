@@ -30,10 +30,14 @@ export default function Header({
         </Link>
       )}
 
-      {/* Top Right: Privacy/Contact */}
+      {/* Top Right: Privacy/Terms/Contact */}
       <div className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-300">
         <Link href="/privacy" className="hover:text-white">
           Privacy
+        </Link>
+        <span className="text-gray-500 hidden sm:inline">•</span>
+        <Link href="/terms" className="hover:text-white">
+          Terms
         </Link>
         <span className="text-gray-500 hidden sm:inline">•</span>
         <Link href="/contact" className="hover:text-white">

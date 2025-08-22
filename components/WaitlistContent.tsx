@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle, Share2, Users, Check, Copy } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function WaitlistContent() {
   const searchParams = useSearchParams();
@@ -11,7 +11,13 @@ export default function WaitlistContent() {
   const rank = searchParams.get("rank");
   const referralCode = searchParams.get("referralCode");
   const [isCopied, setIsCopied] = useState(false);
-  const referralLink = `${window.location.origin}?ref=${referralCode}`;
+  const [referralLink, setReferralLink] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setReferralLink(`${window.location.origin}?ref=${referralCode}`);
+    }
+  }, [referralCode]);
 
   const copyReferralLink = async () => {
     if (referralCode) {
